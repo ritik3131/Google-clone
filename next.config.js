@@ -1,9 +1,9 @@
 module.exports = {
   images: {
-    domains: ['www.google.co.uk'],
+    domains: ["www.google.co.uk", "www.dualshockers.com"],
   },
   plugins: [
     // ...
-    require('@tailwindcss/line-clamp'),
+    require("@tailwindcss/line-clamp"),
   ],
-}
+};
