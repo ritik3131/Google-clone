@@ -1,6 +1,9 @@
 import Head from "next/head";
 import Image from "next/image";
 import Avartar from "../components/Avartar";
+import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
+
 import {
   MicrophoneIcon,
   SearchIcon,
@@ -11,6 +14,8 @@ import { useRef } from "react";
 import { useRouter } from "next/router";
 
 export default function Home() {
+  const { data: session } = useSession();
+  console.log(session);
   const searchInputRef = useRef(null);
   const router = useRouter();
   const searchHandler = (e) => {
@@ -37,7 +42,21 @@ export default function Home() {
           <p className="link">Gmail</p>
           <p className="link">Images</p>
           <ViewGridIcon className="h-10 w-10 p-2 rounded-full hover:bg-gray-100 cursor-pointer -mt-2" />
-          <Avartar url="https://www.dualshockers.com/static/uploads/2021/09/Boruto-Episode-Pays-Homage-To-Naruto-and-Sasukes-Legendary-Fight-1140x641.jpg" />
+          {!session && (
+            <Link href="/api/auth/signin">
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  signIn();
+                }}
+              >
+                Signin
+              </a>
+            </Link>
+          )}
+          {session && (
+            <Avartar url="https://www.dualshockers.com/static/uploads/2021/09/Boruto-Episode-Pays-Homage-To-Naruto-and-Sasukes-Legendary-Fight-1140x641.jpg" />
+          )}
         </div>
       </header>
       {/* Body */}
