@@ -15,7 +15,6 @@ import { useRouter } from "next/router";
 
 export default function Home() {
   const { data: session } = useSession();
-  console.log(session);
   const searchInputRef = useRef(null);
   const router = useRouter();
   const searchHandler = (e) => {
@@ -43,7 +42,7 @@ export default function Home() {
           <p className="link">Images</p>
           <ViewGridIcon className="h-10 w-10 p-2 rounded-full hover:bg-gray-100 cursor-pointer -mt-2" />
           {!session && (
-            <Link href="/api/auth/signin">
+            <Link href="/api/auth/signin" className="link">
               <a
                 onClick={(e) => {
                   e.preventDefault();
@@ -54,9 +53,7 @@ export default function Home() {
               </a>
             </Link>
           )}
-          {session && (
-            <Avartar url="https://www.dualshockers.com/static/uploads/2021/09/Boruto-Episode-Pays-Homage-To-Naruto-and-Sasukes-Legendary-Fight-1140x641.jpg" />
-          )}
+          {session && <Avartar url={session.user.image} />}
         </div>
       </header>
       {/* Body */}

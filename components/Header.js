@@ -1,11 +1,12 @@
 import { MicrophoneIcon, SearchIcon, XIcon } from "@heroicons/react/solid";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useRef } from "react";
 import Avartar from "./Avartar";
 import HeaderOptions from "./HeaderOptions";
 
-function Header() {
+function Header({ session, signIn }) {
   const router = useRouter();
   const searchInputRef = useRef(null);
 
@@ -45,9 +46,23 @@ function Header() {
           </button>
           {/* </div> */}
         </form>
-        <Avartar className="ml-auto mt-1" url="https://www.dualshockers.com/static/uploads/2021/09/Boruto-Episode-Pays-Homage-To-Naruto-and-Sasukes-Legendary-Fight-1140x641.jpg" />
+        {!session && (
+          <Link href="/api/auth/signin" className="link ml-auto mt-1">
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                signIn();
+              }}
+            >
+              Signin
+            </a>
+          </Link>
+        )}
+        {session && (
+          <Avartar className="ml-auto mt-1" url={session.user.image} />
+        )}
       </div>
-      <HeaderOptions/>
+      <HeaderOptions />
     </header>
   );
 }
